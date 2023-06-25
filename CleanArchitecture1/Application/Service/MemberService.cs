@@ -1,5 +1,7 @@
-﻿using Application.IRepository;
+﻿using Application.Dto;
+using Application.IRepository;
 using Application.IService;
+using AutoMapper;
 using Domain.entity;
 using System;
 using System.Collections.Generic;
@@ -12,13 +14,15 @@ namespace Application.Service
     public class MemberService : IMemberService
     {
         private readonly IMemberRepository _memberRepository;
-        public MemberService(IMemberRepository memberRepository)
+        private readonly IMapper _mapper;
+        public MemberService(IMemberRepository memberRepository, IMapper mapper)
         {
             _memberRepository = memberRepository;
+            _mapper = mapper;
         }
-        List<Member> IMemberService.GetAllMembers()
+        List<MemberDto> IMemberService.GetAllMembers()
         {
-            return _memberRepository.GetAllMembers();
+            return _mapper.Map<List<Member>,List<MemberDto>> (_memberRepository.GetAllMembers());
         }
     }
 }
