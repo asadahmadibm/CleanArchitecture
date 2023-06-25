@@ -25,6 +25,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDbContext<StoreDbContext>(options =>
         options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddMediatR(typeof(EmptyClassForAssemblyMediatr).GetTypeInfo().Assembly);
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>),typeof(TracingBehaviour<,>));
 //builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 
