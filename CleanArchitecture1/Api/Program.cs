@@ -1,10 +1,15 @@
 using Application.IRepository;
 using Application.IService;
+using Application.MediatR;
+using Application.MediatR.Member;
 using Application.Service;
 using Infrastructure.DbContexts;
 using Infrastructure.Repository;
+using MediatR;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +24,10 @@ builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDbContext<StoreDbContext>(options =>
         options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddMediatR(typeof(EmptyClassForAssemblyMediatr).GetTypeInfo().Assembly);
+//builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
+
 
 var app = builder.Build();
 

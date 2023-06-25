@@ -1,5 +1,8 @@
 ﻿using Application.IService;
+using Application.MediatR.Member;
+using Application.MediatR.Member.GetAllMemberQuery;
 using Domain.entity;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -9,17 +12,17 @@ namespace Api.Controllers
     public class MembersController : ControllerBase
     {
 
-        private readonly IMemberService memberService;
+        private readonly IMediator _mediator;
 
-        public MembersController(IMemberService memberService)
+        public MembersController(IMediator mediator)
         {
-            this.memberService = memberService;
+            _mediator= mediator;
         }
         // GET: api/<MembersController>
         [HttpGet]
-        public ActionResult<IList<Member>> Get()
+        public async Task<ActionResult<IList<Member>>> Get()
         {
-            return Ok(this.memberService.GetAllMembers());
+            return Ok(await _mediator.Send(new GetAllMemberQueryModel()));
         }
 
     }

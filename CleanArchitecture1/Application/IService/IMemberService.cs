@@ -10,6 +10,6 @@ namespace Application.IService
 {
     public interface IMemberService
     {
-        List<MemberDto> GetAllMembers();
+        Task<List<MemberDto>> GetAllMembersasync();
     }
 }

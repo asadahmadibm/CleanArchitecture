@@ -1,6 +1,7 @@
 ﻿using Application.IRepository;
 using Domain.entity;
 using Infrastructure.DbContexts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,9 @@ namespace Infrastructure.Repository
            new Member{  Id =5 ,Name= "Hansa Shah", Type ="S" , Address="Dabhoi"},
            new Member{  Id =6 ,Name= "Mita Shah", Type ="G" , Address="Surat"}
         };
-        public List<Member> GetAllMembers()
+        public async Task<List<Member>> GetAllMembersAsync()
         {
-            return _context.Memberss.ToList();
+            return await _context.Memberss.ToListAsync();
             return lstMembers;
         }
     }

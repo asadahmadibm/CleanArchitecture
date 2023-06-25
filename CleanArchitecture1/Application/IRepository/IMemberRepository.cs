@@ -9,6 +9,6 @@ namespace Application.IRepository
 {
     public interface IMemberRepository
     {
-        List<Member> GetAllMembers();
+        Task<List<Member>> GetAllMembersAsync();
     }
 }

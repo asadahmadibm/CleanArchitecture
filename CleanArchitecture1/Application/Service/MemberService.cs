@@ -20,9 +20,9 @@ namespace Application.Service
             _memberRepository = memberRepository;
             _mapper = mapper;
         }
-        List<MemberDto> IMemberService.GetAllMembers()
+        public async Task<List<MemberDto>> GetAllMembersasync()
         {
-            return _mapper.Map<List<Member>,List<MemberDto>> (_memberRepository.GetAllMembers());
+            return _mapper.Map<List<Member>,List<MemberDto>> (await _memberRepository.GetAllMembersAsync());
         }
     }
 }
