@@ -9,6 +9,7 @@ impact in core applications’ logic.​
 Domain Layer or busines :  entities(domain object), value objects
 -----------
 No dependencies, no project or class reference, no logic
+
 	Aggregates, entities, value objects, custom domain exceptions, and interfaces for domain services.
  	Interfaces for domain-driven design concepts (i.e. IAggregateRoot, IDomainEvent, IEntity).
  	Base implementations of aggregate root and domain event. Also contains specific domain events pertaining to the business processes.
@@ -16,6 +17,7 @@ No dependencies, no project or class reference, no logic
 Application Layer       : “what” the system should do
 ---------------------
 Only Domain is added as reference project, Pure business logic or services
+
 	Interfaces for infrastructure components such as repositories, unit-of-work and event sourcing.
 	Commands and Queries models and handlers
 	Interfaces and DTOs for cross-cutting concerns (i.e. service bus)
@@ -26,6 +28,7 @@ Only Domain is added as reference project, Pure business logic or services
 Infrastructure Layer    : “how” the system should do
 --------
 This class is responsible for external infrastructure communications like database storage, file system, external systems/APIs/Services and so on
+
 	Generic and specific repositories implementations
 	EF DbContexts, data models and migrations
 	Event sourcing persistence and services implementations
