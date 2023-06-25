@@ -44,3 +44,95 @@ This class is responsible for external infrastructure communications like databa
 	The Resources project contains localized shared resources and resource keys, along with localization services implementations.
 
 	The Shared project contains service implementations for cross-cutting concerns such as user management and authentication, file storage, service bus, localization, application configuration and a password generator.
+
+#MediatR
+-------------------
+nuget MediatR & MediatR.Extensions.Microsoft.DependencyInjection
+
+In Program : builder.Services.AddMediatR(typeof(EmptyClassForAssemblyMediatr).GetTypeInfo().Assembly);
+
+## Send Request & Return Response
+
+1- Make ModelRequest & ModelResponse & Handler
+
+	 public class RequestModel : IRequest<ResponseModel>
+	    {
+	    }
+
+	public class ResponseModel ()
+	 {
+  		//props
+	 }
+  
+      public class CommandHandler : IRequestHandler<RequestModel, ResponseModel>
+	    {
+	        public Task<Guid> Handle(RequestModel request, CancellationToken cancellationToken)
+	        {
+	            throw new NotImplementedException();
+	        }
+	    }
+
+2- use  
+	
+ 	private readonly IMediator _mediator;
+        
+	public MembersController(IMediator mediator)
+        {
+            _mediator= mediator;
+        }
+
+	 [HttpPost]
+	        public async Task<ActionResult<IList<Member>>> Get()
+	        {
+	            return Ok(await _mediator.Send(new RequestModel()));
+	        }
+
+## Inotification for send request & not response 
+
+1- Make NotificationModel & Handler
+
+	public class MemberNotificationModel:INotification
+	    {
+	        public string   Message { get; set; }
+	        public MemberNotificationModel(string message)
+	        {
+	            Message=message;
+	        }
+	    }
+	}
+
+ 	public class MemberNotificationHandler : INotificationHandler<MemberNotificationModel>
+	    {
+	        public async Task Handle(MemberNotificationModel notification, CancellationToken cancellationToken)
+	        {
+	            Console.WriteLine(notification.Message);
+	            
+	        }
+	    }
+
+2- Use  
+
+	await _mediator.Publish(new MemberNotificationModel("hello"));
+
+ ## PipelineBehaviour Execute Before And After Request 
+
+ 1- Make Class
+
+ 	public class TracingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
+	    {
+	        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+	        {
+	            Console.WriteLine("Tracing Behaviour request : " + request.ToString());
+	            var res = await next();
+	            Console.WriteLine("Tracing Behaviour response : " + res.ToString());
+	            return res;
+	        }
+	    }
+
+2- Define In Program
+
+	builder.Services.AddTransient(typeof(IPipelineBehavior<,>),typeof(TracingBehaviour<,>));
+
+
+
+ 
