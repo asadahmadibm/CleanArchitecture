@@ -1,5 +1,6 @@
 ﻿using Application.IRepository;
 using Application.IService;
+using Domain.entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Application.Service
         {
             _memberRepository = memberRepository;
         }
-        List<Domain.Member> IMemberService.GetAllMembers()
+        List<Member> IMemberService.GetAllMembers()
         {
             return _memberRepository.GetAllMembers();
         }

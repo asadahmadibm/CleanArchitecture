@@ -1,4 +1,5 @@
 ﻿using Application.IService;
+using Domain.entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -16,7 +17,7 @@ namespace Api.Controllers
         }
         // GET: api/<MembersController>
         [HttpGet]
-        public ActionResult<IList<Domain.Member>> Get()
+        public ActionResult<IList<Member>> Get()
         {
             return Ok(this.memberService.GetAllMembers());
         }

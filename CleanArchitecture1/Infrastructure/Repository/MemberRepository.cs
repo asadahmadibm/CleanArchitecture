@@ -1,4 +1,5 @@
 ﻿using Application.IRepository;
+using Domain.entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Infrastructure.Repository
 {
     public class MemberRepository : IMemberRepository
     {
-        public static List<Domain.Member> lstMembers = new List<Domain.Member>()
+        public static List<Member> lstMembers = new List<Member>()
         {
            new Domain.Member{  Id =1 ,Name= "Kirtesh Shah", Type ="G" , Address="Vadodara"},
            new Domain.Member{  Id =2 ,Name= "Mahesh Shah", Type ="S" , Address="Dabhoi"},
@@ -18,7 +19,7 @@ namespace Infrastructure.Repository
            new Domain.Member{  Id =5 ,Name= "Hansa Shah", Type ="S" , Address="Dabhoi"},
            new Domain.Member{  Id =6 ,Name= "Mita Shah", Type ="G" , Address="Surat"}
         };
-        public List<Domain.Member> GetAllMembers()
+        public List<Member> GetAllMembers()
         {
             return lstMembers;
         }

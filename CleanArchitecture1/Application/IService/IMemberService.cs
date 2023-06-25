@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.entity;
 
 namespace Application.IService
 {
     public interface IMemberService
     {
-        List<Domain.Member> GetAllMembers();
+        List<Member> GetAllMembers();
     }
 }
