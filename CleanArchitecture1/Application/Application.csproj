@@ -10,4 +10,11 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dto\" />
+    <Folder Include="Authorization\" />
+    <Folder Include="Mapp\" />
+    <Folder Include="MediatR\" />
+  </ItemGroup>
+
 </Project>

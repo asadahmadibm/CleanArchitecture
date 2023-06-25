@@ -10,4 +10,10 @@
     <ProjectReference Include="..\Application\Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DbContexts\" />
+    <Folder Include="localization\" />
+    <Folder Include="authentication\" />
+  </ItemGroup>
+
 </Project>
