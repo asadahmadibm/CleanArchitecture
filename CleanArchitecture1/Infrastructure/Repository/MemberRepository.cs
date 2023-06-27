@@ -1,14 +1,14 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Entities;
-using Infrastructure.DbContexts;
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
     public class MemberRepository : IMemberRepository
     {
-        private StoreDbContext _context;
-        public MemberRepository(StoreDbContext context)
+        private ApplicationDbContext _context;
+        public MemberRepository(ApplicationDbContext context)
         {
             _context = context;
         }

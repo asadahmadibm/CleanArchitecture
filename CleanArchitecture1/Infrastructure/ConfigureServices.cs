@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
-using Infrastructure.DbContexts;
+
+using Infrastructure.Files;
 using Infrastructure.Identity;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Interceptors;
@@ -36,16 +37,16 @@ public static class ConfigureServices
         //else
         //{
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+            options.UseSqlite(configuration.GetConnectionString("DefaultConnection"),
                 builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         //}
-        services.AddDbContext<StoreDbContext>(options =>
-        options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+        //services.AddDbContext<StoreDbContext>(options =>
+        //options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
 
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
-        //services.AddScoped<ApplicationDbContextInitialiser>();
+        services.AddScoped<ApplicationDbContextInitialiser>();
 
         services
             .AddIdentityCore<ApplicationUser>()
@@ -54,7 +55,7 @@ public static class ConfigureServices
 
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();
-        //services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
+        services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
         services.AddAuthorizationCore(options =>
             options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator")));
