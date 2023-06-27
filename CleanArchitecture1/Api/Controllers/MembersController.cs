@@ -1,8 +1,6 @@
-﻿using Application.IService;
-using Application.MediatR.Member;
-using Application.MediatR.Member.GetAllMemberQuery;
-using Application.MediatR.Member.MemberNotification;
-using Domain.entity;
+﻿using Application.Common.Models;
+using Application.MediatR.Member.EventHandlers;
+using Application.MediatR.Member.Queries.GetAllMemberQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +19,7 @@ namespace Api.Controllers
         }
         // GET: api/<MembersController>
         [HttpPost]
-        public async Task<ActionResult<IList<Member>>> Get()
+        public async Task<ActionResult<IList<MemberDto>>> Get()
         {
             return Ok(await _mediator.Send(new GetAllMemberQueryModel()));
         }
