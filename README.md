@@ -20,8 +20,7 @@ Only Domain is added as reference project, Pure business logic or services
 
 	Interfaces for infrastructure components such as repositories, unit-of-work and event sourcing.
 	Commands and Queries models and handlers
-	Interfaces and DTOs for cross-cutting concerns (i.e. service bus)
-	Authorization operations, requirements and handlers implementations
+	Interfaces and DTOs for cross-cutting concerns (i.e. service bus) Authorization operations, requirements and handlers implementations
 	Interfaces and concrete implementations of application-specific business logic services.
 	Mapping profiles between domain entities and CQRS models
  
