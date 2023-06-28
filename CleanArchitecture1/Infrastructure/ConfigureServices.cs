@@ -20,6 +20,7 @@ public static class ConfigureServices
     {
 
         services.AddScoped<IMemberRepository, MemberRepository>();
+        services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<AuditableEntitySaveChangesInterceptor>();
        
         services.AddScoped(provider =>

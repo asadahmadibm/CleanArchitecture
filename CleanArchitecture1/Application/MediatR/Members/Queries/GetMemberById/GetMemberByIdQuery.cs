@@ -10,12 +10,12 @@ namespace Application.Cities.Queries.GetCityById
         public int id { get; set; }
     }
 
-    public class GetCityByIdQueryHandler : IRequestHandlerWrapper<GetMemberByIdQuery, MemberDto>
+    public class GetMemberByIdQueryHandler : IRequestHandlerWrapper<GetMemberByIdQuery, MemberDto>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetCityByIdQueryHandler(IApplicationDbContext context, IMapper mapper)
+        public GetMemberByIdQueryHandler(IApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
