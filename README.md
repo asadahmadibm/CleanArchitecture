@@ -57,11 +57,6 @@ In Program : builder.Services.AddMediatR(typeof(EmptyClassForAssemblyMediatr).Ge
 	 public class RequestModel : IRequest<ResponseModel>
 	    {
 	    }
-
-	public class ResponseModel ()
-	 {
-  		//props
-	 }
   
       public class CommandHandler : IRequestHandler<RequestModel, ResponseModel>
 	    {
