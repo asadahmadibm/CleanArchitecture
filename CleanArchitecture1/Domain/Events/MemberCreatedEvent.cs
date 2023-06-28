@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Events
 {
-    public class MemberGetAllEvent : BaseEvent
+    public class MemberCreatedEvent : BaseEvent
     {
         public Member member { get; }
-        public MemberGetAllEvent(Member _member) 
+        public MemberCreatedEvent(Member _member) 
         {
             member = _member;
         

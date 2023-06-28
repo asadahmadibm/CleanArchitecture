@@ -1,13 +1,12 @@
-﻿using MediatR;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.MediatR.Member.Commands.UpdateMemberCommand
+namespace Application.Dto
 {
-    public class UpdateMemberCommandModel : IRequest<Guid>
+    public class MemberDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

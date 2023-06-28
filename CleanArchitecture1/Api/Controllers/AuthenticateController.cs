@@ -21,7 +21,12 @@ namespace Api.Controllers
             this.userManager = userManager;
             _configuration = configuration;
         }
-
+        /// <summary>
+        /// Login and get JWT token user: asad password: 123456aA@
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)

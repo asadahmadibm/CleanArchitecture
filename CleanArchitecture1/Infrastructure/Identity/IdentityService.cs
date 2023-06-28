@@ -1,5 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Models;
+using Application.Dto;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,15 +13,17 @@ public class IdentityService : IIdentityService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
     private readonly IAuthorizationService _authorizationService;
+    private readonly IMapper _mapper;
 
     public IdentityService(
         UserManager<ApplicationUser> userManager,
         IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
-        IAuthorizationService authorizationService)
+        IAuthorizationService authorizationService, IMapper mapper)
     {
         _userManager = userManager;
         _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
         _authorizationService = authorizationService;
+        _mapper = mapper;
     }
 
     public async Task<string?> GetUserNameAsync(string userId)
@@ -80,5 +84,15 @@ public class IdentityService : IIdentityService
         return result.ToApplicationResult();
     }
 
-    
+    public async Task<ApplicationUserDto> CheckUserPassword(string email, string password)
+    {
+        ApplicationUser user = await _userManager.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+        if (user != null && await _userManager.CheckPasswordAsync(user, password))
+        {
+            return _mapper.Map<ApplicationUserDto>(user);
+        }
+
+        return null;
+    }
 }

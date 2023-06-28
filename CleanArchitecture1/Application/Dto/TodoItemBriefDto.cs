@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace Application.TodoItems.Queries.GetTodoItemsWithPagination;
+namespace Application.Dto;
 
 public class TodoItemBriefDto
 {

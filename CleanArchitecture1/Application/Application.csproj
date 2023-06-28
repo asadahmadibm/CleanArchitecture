@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Authorization\**" />
+    <EmbeddedResource Remove="Authorization\**" />
+    <None Remove="Authorization\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
@@ -19,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Authorization\" />
+    <Folder Include="MediatR\Cities\" />
   </ItemGroup>
 
 </Project>

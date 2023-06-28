@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Entities;
 
-namespace Application.Common.Models;
+namespace Application.Dto;
 
 public class LookupDto
 {

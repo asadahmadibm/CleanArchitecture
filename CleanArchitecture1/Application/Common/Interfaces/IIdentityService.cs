@@ -1,10 +1,12 @@
 ﻿using Application.Common.Models;
+using Application.Dto;
 
 namespace Application.Common.Interfaces;
 
 public interface IIdentityService
 {
     Task<string?> GetUserNameAsync(string userId);
+    Task<ApplicationUserDto> CheckUserPassword(string userName, string password);
 
     Task<bool> IsInRoleAsync(string userId, string role);
 

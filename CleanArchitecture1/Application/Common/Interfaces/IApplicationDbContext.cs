@@ -11,5 +11,11 @@ public interface IApplicationDbContext
 
     DbSet<Member> Memberss { get; }
 
+    DbSet<City> Cities { get;}
+
+    DbSet<District> Districts { get; }
+
+    DbSet<Village> Villages { get; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

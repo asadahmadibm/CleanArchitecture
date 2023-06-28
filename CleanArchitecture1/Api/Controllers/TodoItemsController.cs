@@ -1,4 +1,5 @@
 ﻿using Application.Common.Models;
+using Application.Dto;
 using Application.TodoItems.Commands.CreateTodoItem;
 using Application.TodoItems.Commands.DeleteTodoItem;
 using Application.TodoItems.Commands.UpdateTodoItem;
@@ -11,15 +12,15 @@ namespace Api.Controllers;
 public class TodoItemsController : ApiControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<PaginatedList<TodoItemBriefDto>>> GetTodoItemsWithPagination([FromQuery] GetTodoItemsWithPaginationQuery query)
+    public async Task<ActionResult<ServiceResult<PaginatedList<TodoItemBriefDto>>>> GetTodoItemsWithPagination([FromQuery] GetTodoItemsWithPaginationQuery query)
     {
-        return await Mediator.Send(query);
+        return Ok(await Mediator.Send(query));
     }
 
     [HttpPost]
-    public async Task<ActionResult<int>> Create(CreateTodoItemCommand command)
+    public async Task<ActionResult<ServiceResult<int>>> Create(CreateTodoItemCommand command)
     {
-        return await Mediator.Send(command);
+        return Ok(await Mediator.Send(command));
     }
 
     [HttpPut("{id}")]
