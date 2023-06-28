@@ -21,6 +21,7 @@ public static class ConfigureServices
 
         services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IOpenWeatherService, OpenWeatherService>();
         services.AddScoped<IHttpClientHandler, Infrastructure.Services.Handlers.HttpClientHandler>();
 

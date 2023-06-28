@@ -90,7 +90,7 @@ public class IdentityService : IIdentityService
 
         if (user != null && await _userManager.CheckPasswordAsync(user, password))
         {
-            return _mapper.Map<ApplicationUserDto>(user);
+            return new ApplicationUserDto() { Id=  user.Id,Email=user.Email,UserName=user.UserName };
         }
 
         return null;
