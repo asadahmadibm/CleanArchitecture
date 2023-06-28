@@ -1,22 +1,26 @@
 # CleanArchitecture
-The core inner entities and use cases, also called business and application layers
-
-have no dependencies and are less likely to change
-
-Each layer of this circular diagram has dependencies on the layer next to it. The external layers are most likely to change based on technologies, frameworks and so on, consequently, the solution architecture has less 
-impact in core applications’ logic.​
-
+## Technologies
+	.NET Core 6 Web Api
+	Entity Framework Core 
+	MediatR
+	AutoMapper
+	FluentValidation
+## Overview
 Domain Layer or busines :  entities(domain object), value objects
 -----------
 No dependencies, no project or class reference, no logic
 
+This will contain all entities, enums, exceptions, interfaces, types and logic specific to the domain layer.
+
 	Aggregates, entities, value objects, custom domain exceptions, and interfaces for domain services.
- 	Interfaces for domain-driven design concepts (i.e. IAggregateRoot, IDomainEvent, IEntity).
- 	Base implementations of aggregate root and domain event. Also contains specific domain events pertaining to the business processes.
+	Interfaces for domain-driven design concepts (i.e. IAggregateRoot, IDomainEvent, IEntity).
+	Base implementations of aggregate root and domain event. Also contains specific domain events pertaining to the business processes.
  
 Application Layer       : “what” the system should do
 ---------------------
 Only Domain is added as reference project, Pure business logic or services
+
+This layer defines interfaces that are implemented by outside layers. For example, if the application need to access a notification service, a new interface would be added to application and an implementation would be created within infrastructure.
 
 	Interfaces for infrastructure components such as repositories, unit-of-work and event sourcing.
 	Commands and Queries models and handlers
@@ -26,7 +30,7 @@ Only Domain is added as reference project, Pure business logic or services
  
 Infrastructure Layer    : “how” the system should do
 --------
-This class is responsible for external infrastructure communications like database storage, file system, external systems/APIs/Services and so on
+This layer contains classes for accessing external resources such as database , file systems, web services, smtp, and so on. These classes should be based on interfaces defined within the application layer
 
 	Generic and specific repositories implementations
 	EF DbContexts, data models and migrations
