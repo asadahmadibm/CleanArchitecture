@@ -13,31 +13,47 @@ namespace Api.Controllers
     [ApiController]
     public class MembersController : ApiControllerBase
     {
-        // GET: api/<MembersController>
+        /// <summary>
+        /// Get All Member
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet]
-        [Route("Get")]
-        public async Task<ActionResult<ServiceResult<IList<MemberDto>>>> Get(CancellationToken cancellationToken)
+        [Route("GetAll")]
+        public async Task<ActionResult<ServiceResult<IList<MemberDto>>>> GetAll(CancellationToken cancellationToken)
         {
             return Ok(await Mediator.Send(new GetAllMemberQuery(), cancellationToken));
         }
         /// <summary>
-        /// Get city by Id
+        /// Get Member by Id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResult<CityDto>>> GetCityById(int id, CancellationToken cancellationToken)
+        [HttpGet]
+        [Route("GetMemberById")]
+        public async Task<ActionResult<ServiceResult<CityDto>>> GetMemberById(int id, CancellationToken cancellationToken)
         {
             return Ok(await Mediator.Send(new GetMemberByIdQuery { id = id }, cancellationToken));
         }
+        /// <summary>
+        /// Add Member
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Add")]
         public async Task<ActionResult<ServiceResult<int>>> Add(CreateMemberCommand command, CancellationToken cancellationToken)
         {
             return Ok(await Mediator.Send(command, cancellationToken));
         }
-
+        /// <summary>
+        /// Delete Member
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Delete")]
         public async Task<ActionResult<ServiceResult<int>>> Delete(DeleteMemberCommand command, CancellationToken cancellationToken)

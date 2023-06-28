@@ -21,6 +21,18 @@ public static class ConfigureServices
 
         services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IOpenWeatherService, OpenWeatherService>();
+        services.AddScoped<IHttpClientHandler, Infrastructure.Services.Handlers.HttpClientHandler>();
+
+        services.AddHttpClient("open-weather-api", c =>
+        {
+            c.BaseAddress = new Uri(configuration.GetSection("OpenWeatherApi:Url").Value);
+
+            c.DefaultRequestHeaders.Add(configuration.GetSection("OpenWeatherApi:Key:Key").Value, configuration.GetSection("OpenWeatherApi:Key:Value").Value);
+
+            c.DefaultRequestHeaders.Add(configuration.GetSection("OpenWeatherApi:Host:Key").Value, configuration.GetSection("OpenWeatherApi:Host:Value").Value);
+        });
+
         services.AddScoped<AuditableEntitySaveChangesInterceptor>();
        
         services.AddScoped(provider =>

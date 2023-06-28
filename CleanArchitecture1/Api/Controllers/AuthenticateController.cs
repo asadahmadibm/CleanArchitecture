@@ -1,5 +1,4 @@
 ﻿using Api.Model;
-using Application.Common.Interfaces;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,8 +23,7 @@ namespace Api.Controllers
         /// <summary>
         /// Login and get JWT token user: asad password: 123456aA@
         /// </summary>
-        /// <param name="query"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("login")]
@@ -65,7 +63,11 @@ namespace Api.Controllers
             }
             return Unauthorized();
         }
-
+        /// <summary>
+        /// Register User
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
