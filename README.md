@@ -1,10 +1,11 @@
 # CleanArchitecture
 ## Technologies
-	.NET Core 6 Web Api
+	Asp.NET Core 6 Web Api
 	Entity Framework Core 
 	MediatR
 	AutoMapper
 	FluentValidation
+ 	Sql Lite
 ## Overview
 Domain Layer or busines :  entities(domain object), value objects
 -----------
