@@ -6,7 +6,7 @@ public class CreateMemberCommandValidator : AbstractValidator<CreateMemberComman
 {
     public CreateMemberCommandValidator()
     {
-        RuleFor(v => v.Name)
+        RuleFor(v => v.memberDto.Name)
             .MaximumLength(30)
             .NotEmpty();
     }

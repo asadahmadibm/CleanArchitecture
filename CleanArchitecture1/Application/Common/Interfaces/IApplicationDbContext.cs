@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Common.Interfaces;
 
 public interface IApplicationDbContext
+
 {
     DbSet<TodoList> TodoLists { get; }
 

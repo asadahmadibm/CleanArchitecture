@@ -1,5 +1,6 @@
 ﻿
 using Application.Common.Interfaces;
+using Application.Common.Interfaces.Repository;
 using Application.Common.Models;
 using Application.Dto;
 using Domain.Entities;
@@ -8,34 +9,28 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Application.MediatR.Members.Commands.Create
 {
+
     public class CreateMemberCommand : IRequestWrapper<int>
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public string Address { get; set; }
+        public MemberDto memberDto  { get; set; }
+      
     }
     public class CreateMemberCommandHandler : IRequestHandlerWrapper<CreateMemberCommand, int>
     {
-        private readonly IApplicationDbContext _context;
-        public CreateMemberCommandHandler(IApplicationDbContext context)
+        private readonly IMemberRepository _memberRepository;
+        private readonly IMapper _mapper;
+        public CreateMemberCommandHandler(IMemberRepository memberRepository, IMapper mapper)
         {
-            _context = context;
+            _memberRepository = memberRepository;
+            _mapper = mapper;
         }
         public async Task<ServiceResult<int>> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
         {
-            var entity = new Domain.Entities.Member
-            {
-                Name = request.Name,
-                Type = request.Type,
-                Address = request.Address,
-            };
+            var entity = _mapper.Map<Domain.Entities.Member>(request.memberDto);
 
             entity.AddDomainEvent(new MemberCreatedEvent(entity));
 
-            await _context.Memberss.AddAsync(entity, cancellationToken);
-
-            await _context.SaveChangesAsync(cancellationToken);
+            await _memberRepository.AddAsync(entity);
 
             return ServiceResult.Success(entity.Id);
         }

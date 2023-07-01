@@ -18,7 +18,7 @@ namespace Api.Controllers
     {
 
         /// <summary>
-        /// Login and get JWT token email: test@test.com password: Matech_1850
+        /// Login and get JWT token email: administrator@localhost password: Administrator1!
         /// </summary>
         /// <param name="query"></param>
         /// <param name="cancellationToken"></param>

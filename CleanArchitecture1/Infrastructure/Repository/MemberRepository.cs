@@ -1,14 +1,16 @@
 ﻿using Application.Common.Interfaces;
+using Application.Common.Interfaces.Repository;
 using Domain.Entities;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
-    public class MemberRepository : IMemberRepository
+    public class MemberRepository : GenericRepository<Member>, IMemberRepository
     {
         private ApplicationDbContext _context;
-        public MemberRepository(ApplicationDbContext context)
+        public MemberRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }

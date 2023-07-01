@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Application.Common.Interfaces.Repository;
 using Application.Common.Models;
 using Application.Dto;
 using AutoMapper.Execution;
@@ -20,28 +21,25 @@ namespace Application.MediatR.Members.Commands.Delete
 
     public class DeleteMemberCommandHandler : IRequestHandlerWrapper<DeleteMemberCommand, int>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IMemberRepository _memberRepository;
         private readonly IMapper _mapper;
 
-        public DeleteMemberCommandHandler(IApplicationDbContext context, IMapper mapper)
+        public DeleteMemberCommandHandler(IMemberRepository memberRepository, IMapper mapper)
         {
-            _context = context;
+            _memberRepository = memberRepository;
             _mapper = mapper;
         }
         public async Task<ServiceResult<int>> Handle(DeleteMemberCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Memberss
-                .Where(l => l.Id == request.Id)
-                .SingleOrDefaultAsync(cancellationToken);
+            
+            var entity = await _memberRepository.GetAsync(request.Id);
 
             if (entity == null)
             {
-                throw new NotFoundException(nameof(City), request.Id.ToString());
+                throw new NotFoundException(nameof(Domain.Entities.Member), request.Id.ToString());
             }
 
-            _context.Memberss.Remove(entity);
-
-            await _context.SaveChangesAsync(cancellationToken);
+            await _memberRepository.DeleteAsynv(entity);
 
             return ServiceResult.Success(entity.Id);
         }

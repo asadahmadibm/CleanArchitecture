@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Application.Common.Interfaces.Repository;
 using Application.Common.Models;
 using Application.Dto;
 using System.Collections.Generic;
@@ -7,10 +8,7 @@ namespace Application.MediatR.Member.Queries.GetAllMemberQuery
 {
     public class GetAllMemberQuery : IRequestWrapper<List<MemberDto>>
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public string Address { get; set; }
+        public MemberDto memberDto { get; set; }
     }
     public class GetAllMemberQueryHandler : IRequestHandlerWrapper<GetAllMemberQuery, List<MemberDto>>
     {

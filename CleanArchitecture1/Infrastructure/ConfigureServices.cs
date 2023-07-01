@@ -1,9 +1,10 @@
 ﻿using Application.Common.Interfaces;
-
+using Application.Common.Interfaces.Repository;
 using Infrastructure.Files;
 using Infrastructure.Identity;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Interceptors;
+using Infrastructure.Persistence.Repositories;
 using Infrastructure.Repository;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
@@ -22,6 +23,7 @@ public static class ConfigureServices
         services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IOpenWeatherService, OpenWeatherService>();
         services.AddScoped<IHttpClientHandler, Infrastructure.Services.Handlers.HttpClientHandler>();
 
