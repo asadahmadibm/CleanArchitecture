@@ -34,6 +34,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     public DbSet<District> Districts => Set<District>();
     public DbSet<Village> Villages => Set<Village>();
 
+    public DbSet<Ecarsale> Ecarsales => Set<Ecarsale>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

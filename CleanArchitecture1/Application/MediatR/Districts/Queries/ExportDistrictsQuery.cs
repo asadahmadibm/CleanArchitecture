@@ -1,5 +1,6 @@
 ﻿
 using Application.Common.Interfaces;
+using Application.Common.Interfaces.Repository;
 using Application.Common.Security;
 using Application.Dto;
 
@@ -14,13 +15,13 @@ namespace Application.Districts.Queries
 
     public class ExportDistrictsQueryHandler : IRequestHandler<ExportDistrictsQuery, ExportDto>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IDistrictRepository _Repository;
         private readonly IMapper _mapper;
         private readonly ICsvFileBuilder _fileBuilder;
 
-        public ExportDistrictsQueryHandler(IApplicationDbContext context, IMapper mapper, ICsvFileBuilder fileBuilder)
+        public ExportDistrictsQueryHandler(IDistrictRepository Repository, IMapper mapper, ICsvFileBuilder fileBuilder)
         {
-            _context = context;
+            _Repository = Repository;
             _mapper = mapper;
             _fileBuilder = fileBuilder;
         }
@@ -29,9 +30,7 @@ namespace Application.Districts.Queries
         {
             var result = new ExportDto();
 
-            var records = _mapper.Map<List<DistrictDto>>(await _context.Districts
-                .Where(t => t.CityId == request.CityId)
-                .ToListAsync(cancellationToken));
+            var records = _mapper.Map<List<DistrictDto>>(_Repository.GetByCityIdAsync(request.CityId));
 
             result.Content = _fileBuilder.BuildDistrictsFile(records);
             result.ContentType = "text/csv";

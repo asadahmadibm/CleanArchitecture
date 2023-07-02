@@ -30,7 +30,7 @@ namespace Application.MediatR.Members.Commands.Create
 
             entity.AddDomainEvent(new MemberCreatedEvent(entity));
 
-            await _memberRepository.AddAsync(entity);
+            await _memberRepository.AddAsync(entity, cancellationToken);
 
             return ServiceResult.Success(entity.Id);
         }

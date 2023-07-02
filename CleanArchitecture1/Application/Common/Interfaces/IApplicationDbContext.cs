@@ -17,6 +17,8 @@ public interface IApplicationDbContext
     DbSet<District> Districts { get; }
 
     DbSet<Village> Villages { get; }
+    DbSet<Ecarsale> Ecarsales { get; }
+
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

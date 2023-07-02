@@ -1,5 +1,6 @@
 ﻿
 using Application.Common.Interfaces;
+using Application.Common.Interfaces.Repository;
 using Application.Common.Models;
 using Application.Dto;
 using Domain.Entities;
@@ -17,18 +18,17 @@ namespace Application.Cities.Commands.Update
 
     public class UpdateCityCommandHandler : IRequestHandlerWrapper<UpdateCityCommand, CityDto>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ICityRepository _Repository;
         private readonly IMapper _mapper;
 
-        public UpdateCityCommandHandler(IApplicationDbContext context, IMapper mapper)
+        public UpdateCityCommandHandler(ICityRepository Repository, IMapper mapper)
         {
-            _context = context;
+            _Repository = Repository;
             _mapper = mapper;
         }
-
         public async Task<ServiceResult<CityDto>> Handle(UpdateCityCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Cities.FindAsync(request.Id);
+            var entity = await _Repository.GetAsync(request.Id,cancellationToken);
 
             if (entity == null)
             {
@@ -38,9 +38,9 @@ namespace Application.Cities.Commands.Update
                 entity.Name = request.Name;
             entity.Active = request.Active;
 
-            await _context.SaveChangesAsync(cancellationToken);
+            var result=await _Repository.UpdateAsync(entity, cancellationToken);
 
-            return ServiceResult.Success(_mapper.Map<CityDto>(entity));
+            return ServiceResult.Success(_mapper.Map<CityDto>(result));
         }
     }
 }

@@ -32,14 +32,14 @@ namespace Application.MediatR.Members.Commands.Delete
         public async Task<ServiceResult<int>> Handle(DeleteMemberCommand request, CancellationToken cancellationToken)
         {
             
-            var entity = await _memberRepository.GetAsync(request.Id);
+            var entity = await _memberRepository.GetAsync(request.Id,cancellationToken);
 
             if (entity == null)
             {
                 throw new NotFoundException(nameof(Domain.Entities.Member), request.Id.ToString());
             }
 
-            await _memberRepository.DeleteAsynv(entity);
+            await _memberRepository.DeleteAsynv(entity, cancellationToken);
 
             return ServiceResult.Success(entity.Id);
         }

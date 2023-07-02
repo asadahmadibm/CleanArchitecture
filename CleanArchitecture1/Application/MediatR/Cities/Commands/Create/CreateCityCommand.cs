@@ -1,5 +1,6 @@
 ﻿
 using Application.Common.Interfaces;
+using Application.Common.Interfaces.Repository;
 using Application.Common.Models;
 using Application.Dto;
 using Domain.Entities;
@@ -8,33 +9,30 @@ using Domain.Events;
 
 namespace Application.Cities.Commands.Create
 {
-    public record CreateCityCommand(string Name) : IRequestWrapper<CityDto>;
+    public class CreateCityCommand : IRequestWrapper<CityDto>
+    {
+        public CityDto CityDto  { get; set; }
+    }
 
     public class CreateCityCommandHandler : IRequestHandlerWrapper<CreateCityCommand, CityDto>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ICityRepository _Repository;
         private readonly IMapper _mapper;
 
-        public CreateCityCommandHandler(IApplicationDbContext context, IMapper mapper)
+        public CreateCityCommandHandler(ICityRepository Repository, IMapper mapper)
         {
-            _context = context;
+            _Repository = Repository;
             _mapper = mapper;
         }
 
         public async Task<ServiceResult<CityDto>> Handle(CreateCityCommand request, CancellationToken cancellationToken)
         {
-            var entity = new City
-            {
-                Name = request.Name
-            };
-
+           
+            var entity = _mapper.Map<City>(request.CityDto);
             entity.AddDomainEvent(new CityCreatedEvent(entity));
-
-            await _context.Cities.AddAsync(entity, cancellationToken);
-
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return ServiceResult.Success(_mapper.Map<CityDto>(entity));
+            var result = await _Repository.AddAsync(entity, cancellationToken);
+            var resultDto = _mapper.Map<CityDto>(result);
+            return ServiceResult.Success(resultDto);
         }
     }
 }

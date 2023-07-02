@@ -2,7 +2,6 @@
 using Application.Common.Interfaces.Repository;
 using Domain.Entities;
 using Infrastructure.Persistence;
-using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository

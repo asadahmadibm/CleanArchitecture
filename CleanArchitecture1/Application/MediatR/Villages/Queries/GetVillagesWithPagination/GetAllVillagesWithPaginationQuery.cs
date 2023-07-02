@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Application.Common.Interfaces.Repository;
 using Application.Common.Mappings;
 using Application.Common.Models;
 using Application.Dto;
@@ -15,22 +16,19 @@ namespace Application.Villages.Queries.GetVillagesWithPagination
 
     public class GetAllVillagesWithPaginationQueryHandler : IRequestHandlerWrapper<GetAllVillagesWithPaginationQuery, PaginatedList<VillageDto>>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IVillageRepository _Repository;
         private readonly IMapper _mapper;
 
-        public GetAllVillagesWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper)
+        public GetAllVillagesWithPaginationQueryHandler(IVillageRepository Repository, IMapper mapper)
         {
-            _context = context;
+            _Repository = Repository;
             _mapper = mapper;
         }
 
         public async Task<ServiceResult<PaginatedList<VillageDto>>> Handle(GetAllVillagesWithPaginationQuery request, CancellationToken cancellationToken)
         {
-            PaginatedList<VillageDto> list = _mapper.Map<PaginatedList<VillageDto>>(await _context.Villages
-                .Where(x => x.DistrictId == request.DistrictId)
-                .OrderBy(o => o.Name)
-                .PaginatedListAsync(request.PageNumber, request.PageSize));
-
+            PaginatedList<VillageDto> list = _mapper.Map<PaginatedList<VillageDto>>(await
+                _Repository.GetByDistrictIdAsync(request.DistrictId, request.PageNumber, request.PageSize));
             return list.Items.Any() ? ServiceResult.Success(list) : ServiceResult.Failed<PaginatedList<VillageDto>>(ServiceError.NotFound);
         }
     }

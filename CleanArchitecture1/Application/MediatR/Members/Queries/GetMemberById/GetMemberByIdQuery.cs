@@ -24,7 +24,7 @@ namespace Application.Cities.Queries.GetCityById
 
         public async Task<ServiceResult<MemberDto>> Handle(GetMemberByIdQuery request, CancellationToken cancellationToken)
         {
-            var member = await _memberRepository.GetAsync(request.id);
+            var member = await _memberRepository.GetAsync(request.id, cancellationToken);
 
             var mamberdto=_mapper.Map<MemberDto>(member);
 

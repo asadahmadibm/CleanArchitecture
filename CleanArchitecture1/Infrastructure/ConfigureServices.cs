@@ -4,7 +4,6 @@ using Infrastructure.Files;
 using Infrastructure.Identity;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Interceptors;
-using Infrastructure.Persistence.Repositories;
 using Infrastructure.Repository;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
@@ -21,6 +20,11 @@ public static class ConfigureServices
     {
 
         services.AddScoped<IMemberRepository, MemberRepository>();
+        services.AddScoped<IEcarsaleRepository, EcarSaleRepository>();
+        services.AddScoped<ICityRepository, CityRepository>();
+        services.AddScoped<IVillageRepository, VillageRepository>();
+        services.AddScoped<IDistrictRepository, DistrictRepository>();
+
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -52,12 +56,12 @@ public static class ConfigureServices
         //}
         //else
         //{
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite(configuration.GetConnectionString("DefaultConnection"),
-                builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+        //services.AddDbContext<ApplicationDbContext>(options =>
+        //    options.UseSqlite(configuration.GetConnectionString("DefaultConnection"),
+        //        builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         //}
-        //services.AddDbContext<StoreDbContext>(options =>
-        //options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+        services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(configuration.GetConnectionString("localConnection")));
 
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
