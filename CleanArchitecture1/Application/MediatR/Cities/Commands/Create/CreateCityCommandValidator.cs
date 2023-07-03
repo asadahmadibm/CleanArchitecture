@@ -10,7 +10,7 @@ namespace Application.Cities.Commands.Create
         {
             _context = context;
 
-            RuleFor(v => v.CityDto.Name)
+            RuleFor(v => v.createCityDto.Name)
                 .MaximumLength(100).WithMessage("Name must not exceed 100 characters.")
                 .MustAsync(BeUniqueName).WithMessage("The specified city already exists.")
                 .NotEmpty().WithMessage("Name is required.");

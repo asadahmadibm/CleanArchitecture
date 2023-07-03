@@ -12,6 +12,7 @@ namespace Application.Common.Mappings
 
             CreateMap<Member, MemberDto>().ReverseMap();
             CreateMap<City, CityDto>().ReverseMap();
+            CreateMap<City, CreateCityDto>().ReverseMap();
             CreateMap<District, DistrictDto>().ReverseMap();
             CreateMap<Village, VillageDto>().ReverseMap();
             CreateMap<Ecarsale, EcarsaleDTO>().ReverseMap();

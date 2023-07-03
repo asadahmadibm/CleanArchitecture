@@ -30,7 +30,7 @@ namespace Application.Cities.EventHandler
                     Body = "City is activated successfully.",
                     FromDisplayName = "Clean Architecture",
                     FromMail = "test@test.com",
-                    ToMail = new List<string> { "to@test.com" }
+                    ToMail = new List<string> { "asad.ahmadi.bm@gmail.com" }
                 });
             }
         }
