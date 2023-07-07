@@ -37,7 +37,7 @@ namespace Application.ApplicationUser.Queries.GetToken
             return ServiceResult.Success(new LoginResponse
             {
                 User = user,
-                Token = _tokenService.CreateJwtSecurityToken(user.Id,userRoles)
+                Token = _tokenService.CreateJwtSecurityToken(user,userRoles)
             });
         }
 

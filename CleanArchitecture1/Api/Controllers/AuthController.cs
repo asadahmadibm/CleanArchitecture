@@ -14,7 +14,7 @@ namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticateController : ApiControllerBase
+    public class AuthController : ApiControllerBase
     {
 
         /// <summary>

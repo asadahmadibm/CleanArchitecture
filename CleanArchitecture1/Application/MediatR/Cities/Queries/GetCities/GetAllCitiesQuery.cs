@@ -2,10 +2,12 @@
 using Application.Common.Interfaces;
 using Application.Common.Interfaces.Repository;
 using Application.Common.Models;
+using Application.Common.Security;
 using Application.Dto;
 
 namespace cleanarchitecture4.Application.Cities.Queries.GetCities
 {
+    [Authorize(Permission = "EcarSales")]
     public class GetAllCitiesQuery : IRequestWrapper<List<CityDto>>
     {
 

@@ -1,7 +1,11 @@
-﻿namespace Application.Common.Interfaces
+﻿using Application.Dto;
+using Microsoft.AspNetCore.Http;
+
+namespace Application.Common.Interfaces
 {
     public interface ITokenService
     {
-        string CreateJwtSecurityToken(string id,IList<string> userRoles);
+        string CreateJwtSecurityToken(ApplicationUserDto applicationUserDto,IList<string> userRoles);
+        bool validToken(string token);
     }
 }

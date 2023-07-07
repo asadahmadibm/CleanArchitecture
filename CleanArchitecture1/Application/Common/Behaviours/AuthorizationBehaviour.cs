@@ -2,7 +2,9 @@
 using Application.Common.Interfaces;
 using Application.Common.Security;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using System.Reflection;
+using System.Security;
 using System.Threading;
 
 namespace Application.Common.Behaviours;
@@ -11,11 +13,14 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
 {
     private readonly IUser _user;
     private readonly IIdentityService _identityService;
+    private IHttpContextAccessor _httpContextAccessor;
 
     public AuthorizationBehaviour(
+        IHttpContextAccessor httpContextAccessor,
         IUser user,
         IIdentityService identityService)
     {
+        _httpContextAccessor = httpContextAccessor;
         _user = user;
         _identityService = identityService;
     }
@@ -72,6 +77,45 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
                         throw new ForbiddenAccessException();
                     }
                 }
+            }
+
+            //Permission Based by asad 
+            var authorizeAttributesWithPermissions = authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Permission));
+            if (authorizeAttributesWithPermissions.Any())
+            {
+                if (_httpContextAccessor == null)
+                {
+                    throw new NullReferenceException("no");
+                }
+                if (_httpContextAccessor.HttpContext.User == null)
+                {
+                    throw new CbiForbbidenException($"User Not Defined");
+                }
+
+                var per = _httpContextAccessor.HttpContext.User.Claims.Where(x => x.Type == AppCustomeClaims.Permission).Select(a => a.Value).FirstOrDefault();
+                if (string.IsNullOrWhiteSpace(per))
+                {
+                    throw new CbiForbbidenException($"User Not Any Permission");
+                }
+
+                var permissions = per.Split(",");
+                bool hasAccess = false;
+                foreach (var _permission in authorizeAttributesWithPermissions.Select(a => a.Permission))
+                {
+                    hasAccess = permissions.Any(a => {
+                        var value = a.ToLower();
+                        return value == AppPermissions.SysAdmin.Key.ToLower()
+                        || value == _permission.ToLower();
+                    });
+
+                    if (hasAccess)
+                    {
+                        return await next();
+                    }
+                }
+
+                if (!hasAccess)
+                    throw new CbiForbbidenException($"Invalid access to {permissions}");
             }
         }
 

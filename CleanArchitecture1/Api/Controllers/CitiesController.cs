@@ -8,15 +8,17 @@ using Application.Common.Security;
 using Application.Dto;
 using cleanarchitecture4.Application.Cities.Queries.GetCities;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace Api.Controllers
 {
     /// <summary>
     /// Cities
     /// </summary>
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
+    
     public class CitiesController : ApiControllerBase
     {
         /// <summary>
@@ -26,6 +28,7 @@ namespace Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetAllCities")]
+        
         public async Task<ActionResult<ServiceResult<List<CityDto>>>> GetAllCities(CancellationToken cancellationToken)
         {
             //Cancellation token example.
